@@ -5,7 +5,7 @@ from src.db_prospection import ProspectionDB
 
 def load_builtwith_files():
     # requires unzipped files
-    builtwith_dir = '/Users/xavierphilipponneau/Documents/Formation/Freelancing/builtwith'
+    builtwith_dir = '<your_full_path_to_mantiks_directory>'
     bfile1 = builtwith_dir + '/' + 'Angular-JS-websites-in-France.csv'
     bfile2 = builtwith_dir + '/' + 'Angular-JS-websites-in-UAE.csv'
     bfile3 = builtwith_dir + '/' + 'Angular-Material-websites-in-France.csv'
@@ -23,7 +23,7 @@ def load_builtwith_files():
 
 
 def load_mantiks_files():
-    dir = '/Users/xavierphilipponneau/Documents/Formation/Freelancing/mantiks'
+    dir = '<your_full_path_to_mantiks_directory>'
     file1 = dir + '/' + 'Angular à partir du 18_02_2025 - 6 mois.csv'
     file2 = dir + '/' + 'Développeur Java Freelance Moins De 1000 Salariés.csv'
     file3 = dir + '/' + 'Développeur Angular Entreprise De Moins De 1000 Salariés Qui Bossent En Télétravail Avec Des CDIs.csv'
