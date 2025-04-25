@@ -7,6 +7,7 @@
     if (followButton && !followButton.disabled) {
       followButton.click();
       console.log("✅ Bouton Suivre cliqué.");
+      chrome.runtime.sendMessage({action: "close_tab"});
     } else {
       setTimeout(checkAndFollow, 1000);
     }

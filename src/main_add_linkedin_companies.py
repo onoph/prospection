@@ -1,3 +1,5 @@
+from IPython.utils.openpy import source_to_unicode
+
 from db_prospection import ProspectionDB
 import time
 import webbrowser
@@ -35,10 +37,28 @@ def add_company_with_validation(nb_open_companies_at_once: int = 8):
         else:
             break
 
+def auto_add_companies_with_batch_delay(nb_companies: int, avg_batch_delay: int, max_iter=6):
+    import random
+    can_add_companies = True
+    current_iter = 0
+    while(can_add_companies and current_iter < max_iter):
+        can_add_companies = auto_add_companies(nb_companies)
+        current_iter += 1
+        if can_add_companies:
+            batch_delay_variation = avg_batch_delay + random.randint(-10, 10)
+            print("Batch delay variation : " + str(batch_delay_variation))
+            time.sleep(batch_delay_variation)
+
+
 # uses plugin to open browser and update status in DB
-def auto_add_companies(nb_companies_to_add: int):
+def auto_add_companies(max_nb_companies_to_add: int) -> bool:
+    import random
     prospection_db = ProspectionDB('prospection_data.db')
-    companies_to_add = prospection_db.get_all_companies_not_added()[:nb_companies_to_add]
+    max_nb_companies_to_add = random.randint(int(max_nb_companies_to_add / 2), max_nb_companies_to_add)
+    print('Random number of companies to add : ' + str(max_nb_companies_to_add))
+
+    companies_to_add = prospection_db.get_all_companies_not_added()[:max_nb_companies_to_add]
+
 
     print('Total nb companies not added : ' + str(len(companies_to_add)))
     for company in companies_to_add:
@@ -47,11 +67,11 @@ def auto_add_companies(nb_companies_to_add: int):
         print('Opening company : ' + str(company.name) + " - " + company.link)
         prospection_db.updateAddedCompany(company)
         time.sleep(1)
+    return len(companies_to_add) > 0
 
 if __name__ == '__main__':
     print("Hello")
 
     # uncomment to choose which way you prefer. Best way is to install the plugin and use auto mode.Everything is easy :)
-
-    #auto_add_companies(20)
+    auto_add_companies_with_batch_delay(10, 60, 5)
     #add_company_with_validation(8)
